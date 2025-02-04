@@ -49,6 +49,10 @@ async function searchPokemon() {
     }
 
     const data = await response.json();
+    
+    // Fetch Evolution Chain
+    const evolutionData = await fetchEvolutionData(data.species.url);
+
     document.getElementById("search-result").innerHTML = `
         <div class="pokemon-card">
             <img src="${data.sprites.front_default}" alt="${data.name}">
@@ -56,9 +60,31 @@ async function searchPokemon() {
             <p>Type: ${data.types.map(type => type.type.name).join(", ")}</p>
             <p>Abilities: ${data.abilities.map(ability => ability.ability.name).join(", ")}</p>
             <p>Stats: ${data.stats.map(stat => `${stat.stat.name}: ${stat.base_stat}`).join(", ")}</p>
+            <h4>Evolution Chain:</h4>
+            <p>${evolutionData}</p>
         </div>
     `;
 }
+
+// Fetch Evolution Chain
+async function fetchEvolutionData(speciesUrl) {
+    const speciesResponse = await fetch(speciesUrl);
+    const speciesData = await speciesResponse.json();
+
+    const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+    const evolutionData = await evolutionResponse.json();
+
+    let evolutionChain = [];
+    let evolutionStage = evolutionData.chain;
+
+    while (evolutionStage) {
+        evolutionChain.push(evolutionStage.species.name);
+        evolutionStage = evolutionStage.evolves_to[0]; // Get next evolution
+    }
+
+    return evolutionChain.join(" → ");
+}
+
 
 // Fetch data on page load
 fetchRandomPokemon();
