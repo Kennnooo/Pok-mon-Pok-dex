@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="pokedex">
+        <h1>Pokédex</h1>
+
+        <!-- Random Pokémon Section -->
+        <div class="random-pokemon">
+            <h2>Random Pokémon</h2>
+            <div id="random-pokemon-container">
+                <p>Loading...</p>
+            </div>
+            <button onclick="fetchRandomPokemon()">I Want Another Pokémon</button>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" id="search-input" placeholder="Search Pokémon...">
+            <button onclick="searchPokemon()">Search</button>
+        </div>
+        <div id="search-result"></div>
+
+        <!-- Popular Pokémon Section -->
+        <div class="popular-pokemon">
+            <h2>Popular Pokémon</h2>
+            <div id="popular-pokemon-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
